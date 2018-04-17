@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MusicSearch</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+<div id="app">
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="text-center">Music Search</h1>
+		<p class="text-center">Looking for a song?</p>
+	</div>
+</div>
+  <div class="container">
+
+<div class="row">
+
+  <div>
+    <div class="form-group">
+    <label><h1 class="text-cetnter">What do you want to search for?</h1></label>
+      <input id="searchInput" type="text" class="form-control" placeholder="Find music" v-model="musicName"></input>
+    </div>
+
+    <div class="form-group">
+      <button id="searchSubmit" type="submit" value="Submit" v-on:click="GetSongs" class="btn btn-default">Go!</button>
+      <button v-on:click="GetFavs" class="btn btn-default">Show My Favorites!</button>
+      <button type="button" v-if="showingPlayList == true" v-on:click="sort" class="btn btn-default">Sort Alphabetically</button>
+    </div>
+  </div>
+
+</div>
+</div>
+<div v-if="loading">
+	<h1>Loading...</h1>
+</div>
+<h1>{{resultString}}</h1><br>
+<div class="container">
+  <div class="row">
+  <template v-for="data in musicList">
+  <div class="col-md-4">
+    <div class="colcontainer">
+      <div class="text-center">
+        <img class="rounded" v-bind:src=data.image>
+
+      </div>
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td class="boldtd">Title</td>
+            <td>{{data.trackName}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td class="boldtd">Artist</td>
+            <td>{{data.artistName}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td class="boldtd">Genre</td>
+            <td>{{data.GenreName}}</td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td class="boldtd">Release Date</td>
+            <td>{{data.releaseDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4 class="text-center">
+        <a v-bind:href=data.itunesUrl target="_blank">visit itunes</a>
+      </h4>
+
+      <p class="text-center">Preview</p>
+      <div class="text-center">
+        <audio controls>
+          <source v-bind:src=data.previewUrl type="audio/mpeg"/>
+          <source v-bind:src=data.previewUrl type="audio/ogg"/>
+        </audio>
+        <button v-if="showingPlayList == false" v-on:click.prevent="addToFav(data)" class="btn btn-default">Add to favorites</button>
+        <button v-if="showingPlayList == true" v-on:click.prevent="removeFromFav(data)" class="btn btn-default">remove from favorites</button>
+      </div>
+    </div>
+  </div>
+
+
+
+</template>
+
+  </div>
+</div>
+<!-- <div id="searchResults" v-html="result"> </div> -->
+</div>
+
+<div class="footer">
+  <p>&copy; <a href="https://github.com/haoyucn/CreativeProject4">Creative Project 4</a> All rights reserved</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<!-- <script src="script.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>
